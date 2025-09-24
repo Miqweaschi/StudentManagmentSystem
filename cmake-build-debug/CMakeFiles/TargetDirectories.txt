@@ -1,0 +1,3 @@
+C:/Users/svitl/CLionProjects/StudentManagmentSystem/cmake-build-debug/CMakeFiles/StudentManagmentSystem.dir
+C:/Users/svitl/CLionProjects/StudentManagmentSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/svitl/CLionProjects/StudentManagmentSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
