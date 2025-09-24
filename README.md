@@ -12,7 +12,7 @@ Ogni studente può essere iscritto a più corsi e ogni corso può avere più stu
   - `nodo`
   - `corso`
   - `CorsoDiLaurea`
-- **`main.cpp`** (da creare) → file di test per utilizzare le classi e simulare l’iscrizione di studenti ai corsi.
+- **`main.cpp`**  test per utilizzare le classi e simulare l’iscrizione di studenti ai corsi.
 
 ---
 
