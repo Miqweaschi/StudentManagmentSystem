@@ -31,6 +31,7 @@ int main() {
     Informatica.getCorso("informatica I");
 
     Informatica.getStudentiDalCorso("Algoritmi e strutture dati");
+    Informatica.getStudentiDalCorso("informatica I");
 
 
     return 0;

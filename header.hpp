@@ -90,6 +90,10 @@ class corso {
             return nomeCorso;
         }
 
+        nodo* getHead() {
+            return head;
+        }
+
         void inserisciStudente(studente s) {
             nodo* newNodo = new nodo(s);
             if (head == nullptr) {
@@ -100,21 +104,18 @@ class corso {
                 tail = newNodo;
             }
         }
-
-        void getStudenti() {
-            for (nodo* t = head; t != nullptr; t = t->getNext()) {
-                cout << t->getNome() <<"  matricola : "<< t->getMatricola() <<endl;
-            }
-        }
 };
 
 class CorsoDiLaurea {
 private:
+    static int codiceCorsoDiLaurea;
     int puntatore;
     corso c[16];
     string nome;
 public:
-    CorsoDiLaurea(string n) : nome(n) , puntatore(0) {}
+    CorsoDiLaurea(string n) : nome(n) , puntatore(0) {
+        ++codiceCorsoDiLaurea;
+    }
 
     void inserisciCorsi(corso t) {
         c[puntatore] = t;
@@ -135,15 +136,22 @@ public:
         cout << "corso non presente" << endl;
     }
 
+    string getCodiceCorsoDiLaurea() {
+        stringstream ss;
+        ss << setw(4) << setfill('0') << codiceCorsoDiLaurea;
+        return ss.str();
+    }
 
-void getStudentiDalCorso(string n) {
-    for (int i = 0; i < this->getPuntatore(); i++) {
-        if (this->c[i].getNomeCorso() == n) {
-            c[i].getStudenti();
+    void getStudentiDalCorso(string n) {
+        for (int i = 0; i < this->getPuntatore(); i++) {
+            if (this->c[i].getNomeCorso() == n) {
+                for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext()) {
+                    cout << t->getNome() << " matricola: " << getCodiceCorsoDiLaurea() <<t->getMatricola() << endl;
+                }
+            }
         }
     }
-}
 };
 
-
+ int CorsoDiLaurea::codiceCorsoDiLaurea = 0;
 #endif //HEADER_HPP
