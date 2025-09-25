@@ -22,24 +22,24 @@ class studente {
         string cognome;
         int matricola;
     public:
-        studente() : nome(""), cognome("") {} //costruttore di default
+        studente() : nome(""), cognome("") {}    //costruttore di default
 
         studente(string n, string c) {
             nome = n;
-            cognome = c;        // costruttore parametrizzato
-            matricola = ++contatore;
-        }
+            cognome = c;                            // costruttore parametrizzato contenente l'attributo matricola che viene
+            matricola = ++contatore;                // incrementato ogni volta che un nuovo sudente viene creato. al primo studente creato diventa 1
+        }                                           // diventerà successivamente 000001 tramite il metodo getMatricola.
 
-        string getNome() {
+        string getNome() {                          //metodo per ricavare il nome dello studente
             return nome;
         }
-        string getCognome() {
+        string getCognome() {                       //metodo per ricavare il cognome dello studente
             return cognome;
         }
 
         string getMatricola() {
             stringstream ss;
-            ss << setw(6) << setfill('0') << matricola;
+            ss << setw(6) << setfill('0') << matricola;           //metodo per ricavare la matricola come stringa
             return ss.str();
         }
 };
@@ -47,7 +47,8 @@ int studente::contatore = 0;  //variabile statica utilizzata per assegnare una m
 
 
 
-
+// creazione della classe nodo, viene creata questa classe per implementare la lista a singolo puntatore successivamente, ogni nodo
+// contiene uno studente, un nodo punta al prossimo studente inserito.
 class nodo {
 private:
     studente stud;
@@ -71,7 +72,7 @@ public:
 };
 
 
-//creazione classe corso
+//creazione classe corso, questa è la nostra lista che contiene un head ed una tail
 class corso {
     private:
 
@@ -106,12 +107,27 @@ class corso {
         }
 };
 
+
+//creazione della classe corso di laurea, questa classe contiene un array di 16 corsi, come un normale corso di laurea,
+
 class CorsoDiLaurea {
 private:
     static int codiceCorsoDiLaurea;
     int puntatore;
     corso c[16];
     string nome;
+
+    int getPuntatore() {
+        return puntatore;
+    }
+
+
+    string getCodiceCorsoDiLaurea() {
+        stringstream ss;
+        ss << setw(4) << setfill('0') << codiceCorsoDiLaurea;
+        return ss.str();
+    }
+
 public:
     CorsoDiLaurea(string n) : nome(n) , puntatore(0) {
         ++codiceCorsoDiLaurea;
@@ -120,10 +136,6 @@ public:
     void inserisciCorsi(corso t) {
         c[puntatore] = t;
         puntatore++;
-    }
-
-    int getPuntatore() {
-        return puntatore;
     }
 
     void getCorso(string n) {
@@ -136,16 +148,13 @@ public:
         cout << "corso non presente" << endl;
     }
 
-    string getCodiceCorsoDiLaurea() {
-        stringstream ss;
-        ss << setw(4) << setfill('0') << codiceCorsoDiLaurea;
-        return ss.str();
-    }
-
     void getStudentiDalCorso(string n) {
         for (int i = 0; i < this->getPuntatore(); i++) {
-            if (this->c[i].getNomeCorso() == n) {
-                for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext()) {
+
+            if (this->c[i].getNomeCorso() == n) {    // metodo creato per ricavare gli studenti iscritti ad un corso, il cout alla fine oltre a far uscire a video il nome dello studente
+                                                     //stampa anche l'unione del codice del corso di laurea insieme alla matricola formando la MATRICOLA vera e propria,
+                for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext())
+
                     cout << t->getNome() << " matricola: " << getCodiceCorsoDiLaurea() <<t->getMatricola() << endl;
                 }
             }
