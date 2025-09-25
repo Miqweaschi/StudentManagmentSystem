@@ -5,7 +5,7 @@ Ogni studente può essere iscritto a più corsi e ogni corso può avere più stu
 
 ---
 
-## 📂 Struttura del progetto
+##  Struttura del progetto
 
 - **`header.hpp`** → contiene tutte le classi:
   - `studente`
@@ -16,7 +16,7 @@ Ogni studente può essere iscritto a più corsi e ogni corso può avere più stu
 
 ---
 
-## 🏗️ Classi principali
+##  Classi principali
 
 ### 🔹 `studente`
 - Rappresenta uno studente con **nome**, **cognome** e **matricola univoca** (generata automaticamente).
@@ -47,40 +47,3 @@ Ogni studente può essere iscritto a più corsi e ogni corso può avere più stu
   - `getStudentiDalCorso(string nome)`
 
 ---
-
-## ▶️ Esempio di utilizzo
-
-Crea un file `main.cpp` con questo contenuto:
-
-```cpp
-#include "header.hpp"
-
-int main() {
-    // Creazione di un corso di laurea
-    CorsoDiLaurea informatica("Informatica");
-
-    // Creazione corsi
-    corso prog("Programmazione", 12);
-    corso reti("Reti di Calcolatori", 6);
-
-    // Creazione studenti
-    studente s1("Mario", "Rossi");
-    studente s2("Luca", "Bianchi");
-
-    // Iscrizione studenti ai corsi
-    prog.inserisciStudente(s1);
-    prog.inserisciStudente(s2);
-    reti.inserisciStudente(s1);
-
-    // Aggiunta corsi al corso di laurea
-    informatica.inserisciCorsi(prog);
-    informatica.inserisciCorsi(reti);
-
-    // Ricerca di un corso
-    informatica.getCorso("Programmazione");
-
-    // Stampa studenti di un corso
-    informatica.getStudentiDalCorso("Programmazione");
-
-    return 0;
-}
