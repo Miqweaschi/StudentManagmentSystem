@@ -1,3 +1,4 @@
+#include <complex.h>
 #include <iostream>
 #include "header.hpp"
 // Realizzare un programma che gestisce studenti e corsi universitari. Ogni studente può essere iscritto a piu
@@ -33,6 +34,10 @@ int main() {
     Informatica.getStudentiDalCorso("Algoritmi e strutture dati");
     Informatica.getStudentiDalCorso("informatica I");
 
+    Informatica.EliminaStudente("informatica I","000001");
+    Informatica.getStudentiDalCorso("informatica I");
+
+    Informatica.getStudentiDalCorso("Algoritmi e strutture dati");
 
     return 0;
 }
