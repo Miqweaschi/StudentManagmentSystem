@@ -74,37 +74,59 @@ public:
 
 //creazione classe corso, questa è la nostra lista che contiene un head ed una tail
 class corso {
-    private:
+private:
 
-        string nomeCorso;
-        int cfu;
-        nodo* head;
-        nodo* tail;
-    public:
-        corso() : nomeCorso(""), cfu(0), head(nullptr), tail(nullptr) {}
-        corso(string n,int c): head(nullptr), tail(nullptr) {
-            cfu = c;
-            nomeCorso = n;
+    string nomeCorso;
+    int cfu;
+    nodo* head;
+    nodo* tail;
+public:
+    corso() : nomeCorso(""), cfu(0), head(nullptr), tail(nullptr) {}
+    corso(string n,int c): head(nullptr), tail(nullptr) {
+        cfu = c;
+        nomeCorso = n;
+    }
+
+    string getNomeCorso() {
+        return nomeCorso;
+    }
+
+    nodo* getHead() {
+        return head;
+    }
+
+    void inserisciStudente(studente s) {
+        nodo* newNodo = new nodo(s);
+        if (head == nullptr) {
+            head = tail = newNodo;
         }
-
-        string getNomeCorso() {
-            return nomeCorso;
+        else {
+            tail->setNext(newNodo);
+            tail = newNodo;
         }
+    }
 
-        nodo* getHead() {
-            return head;
+    void eliminaStudente(string matricola) {
+        nodo* precedente;
+        nodo* successivo;               // metodo creato per eliminare uno studente dalla lista
+                                        // non controllo se la lista è vuota perchè già lo faccio nel metodo del corsodilaurea.
+        if(head->getMatricola() == matricola) {
+            successivo = head->getNext();       // controllo se lo studente da eliminare è in testa alla lista
+            head = successivo;
         }
+        precedente = head;
+        successivo = head->getNext();
 
-        void inserisciStudente(studente s) {
-            nodo* newNodo = new nodo(s);
-            if (head == nullptr) {
-                head = tail = newNodo;
+        while (successivo != nullptr) {
+            if (matricola == successivo->getMatricola()) {      //se non è in testa alla lista , mi salvo il precedente del nodo da eliminare  e gli faccio puntare al nodo successivo
+                                                                // a quello da eliminare.
+                precedente->setNext(successivo->getNext());
+                return;
             }
-            else {
-                tail->setNext(newNodo);
-                tail = newNodo;
-            }
-        }
+            precedente = successivo;
+            successivo = successivo->getNext();
+        };
+    }
 };
 
 
@@ -152,15 +174,29 @@ public:
         for (int i = 0; i < this->getPuntatore(); i++) {
 
             if (this->c[i].getNomeCorso() == n) {    // metodo creato per ricavare gli studenti iscritti ad un corso, il cout alla fine oltre a far uscire a video il nome dello studente
-                                                     //stampa anche l'unione del codice del corso di laurea insieme alla matricola formando la MATRICOLA vera e propria,
+                //stampa anche l'unione del codice del corso di laurea insieme alla matricola formando la MATRICOLA vera e propria,
                 for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext())
 
                     cout << t->getNome() << " matricola: " << getCodiceCorsoDiLaurea() <<t->getMatricola() << endl;
+            }
+        }
+    }
+
+    void EliminaStudente(string n,string matricola) {
+        for (int i = 0; i < this->getPuntatore(); i++) {
+            if (this->c[i].getNomeCorso() == n) {                   // metodo che riceve in input il nome del corso e la matricola dello studente da eliminare dal corso
+                for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext()) {      // il controllo se lo studente esiste oppure no viene fatto qui in questo metodo.
+                    if (matricola == t->getMatricola()) {
+                        cout << "studente " << t->getMatricola() << " eliminato dal corso" << endl;
+                        this->c[i].eliminaStudente(matricola);
+                    }
+
                 }
             }
         }
     }
 };
+
 
  int CorsoDiLaurea::codiceCorsoDiLaurea = 0;
 #endif //HEADER_HPP
