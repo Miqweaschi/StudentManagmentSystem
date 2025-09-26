@@ -135,6 +135,7 @@ public:
 class CorsoDiLaurea {
 private:
     static int codiceCorsoDiLaurea;
+    int codCorsoDiLaurea;
     int puntatore;
     corso c[16];
     string nome;
@@ -146,13 +147,13 @@ private:
 
     string getCodiceCorsoDiLaurea() {
         stringstream ss;
-        ss << setw(4) << setfill('0') << codiceCorsoDiLaurea;
+        ss << setw(4) << setfill('0') << codCorsoDiLaurea;
         return ss.str();
     }
 
 public:
     CorsoDiLaurea(string n) : nome(n) , puntatore(0) {
-        ++codiceCorsoDiLaurea;
+        codCorsoDiLaurea= ++codiceCorsoDiLaurea;
     }
 
     void inserisciCorsi(corso t) {
@@ -177,7 +178,7 @@ public:
                 //stampa anche l'unione del codice del corso di laurea insieme alla matricola formando la MATRICOLA vera e propria,
                 for( nodo* t = this->c[i].getHead(); t != nullptr; t = t->getNext())
 
-                    cout << t->getNome() << " matricola: " << getCodiceCorsoDiLaurea() <<t->getMatricola() << endl;
+                    cout << t->getNome() << " matricola: " << this->getCodiceCorsoDiLaurea() <<t->getMatricola() << endl;
             }
         }
     }
