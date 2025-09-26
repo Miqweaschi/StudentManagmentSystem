@@ -12,6 +12,10 @@ int main() {
     studente s4("Samuele","Reynold");
     studente s5("Maria","Rossi");
 
+    corso biologia1("biologia1",12);
+    biologia1.inserisciStudente(s1);
+    biologia1.inserisciStudente(s2);
+
    corso informaticaI("informatica I",12);
     informaticaI.inserisciStudente(s1);
     informaticaI.inserisciStudente(s2);                  //creazione corso informatica I passando in input nome del corso e cfu
@@ -39,5 +43,9 @@ int main() {
 
     Informatica.getStudentiDalCorso("Algoritmi e strutture dati");
 
+
+    CorsoDiLaurea biologia("biologia");
+    biologia.inserisciCorsi(informaticaI);
+    biologia.getStudentiDalCorso("informatica I");
     return 0;
 }
