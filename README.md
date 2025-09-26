@@ -43,6 +43,7 @@ Ogni studente può essere iscritto a più corsi e ogni corso può avere più stu
 - Contiene fino a **16 corsi**.
 - Metodi principali:
   - `inserisciCorsi(corso t)`
+  - `EliminaStudente(string nomeCorso,string matricola)`
   - `getCorso(string nome)`
   - `getStudentiDalCorso(string nome)`
 
