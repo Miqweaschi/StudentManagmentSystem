@@ -1,6 +1,6 @@
 # Gestione Studenti e Corsi Universitari
 
-Questo progetto in C++ implementa un semplice sistema per gestire **studenti**, **corsi** e un **corso di laurea**.  
+Questo progetto in C++ implementa un semplice sistema per gestire **studenti**, **corsi** e **corsi di laurea**.  
 Ogni studente può essere iscritto a più corsi e ogni corso può avere più studenti.
 
 ---
