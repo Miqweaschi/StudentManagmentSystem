@@ -94,6 +94,7 @@ public:
         // evita duplicati
         if (getStudente(s.getNome(), s.getCognome())) return false;
 
+<<<<<<< HEAD
         nodo* newNodo = new nodo(s);
         if (head == nullptr) {
             head = tail = newNodo;
@@ -102,6 +103,30 @@ public:
             tail = newNodo;
         }
         return true;
+=======
+    nodo* getHead() {
+        return head;
+    }
+
+    bool getStudente(string nome, string cognome) {
+        for( nodo* t = getHead(); t != nullptr; t = t->getNext()) {
+           if( t->getNome() == nome && t->getCognome() == cognome) {
+               return true;
+           }
+        }
+        return false;
+    }
+
+    bool inserisciStudente(studente s) {
+        nodo* newNodo = new nodo(s);
+        if (head == nullptr) {
+            head = tail = newNodo;
+            return true;
+        }
+            tail->setNext(newNodo);
+            tail = newNodo;
+            return true;
+>>>>>>> 48c43f1 (inserito metodo di ricerca degli studenti di un corso)
     }
 
     bool getStudente(string nome, string cognome) {
