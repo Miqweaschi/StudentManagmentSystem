@@ -15,6 +15,7 @@
 #include <json/json.h>
 #include <drogon/drogon.h>
 using namespace std;
+using namespace drogon;
 
 //creazione classe studente
 class studente {
@@ -307,7 +308,9 @@ private:
     static studentManager studentService;
 public:
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(UserController::registerUser,"/register",drogon::Post);
+    ADD_METHOD_TO(UserController::registerUser,"/register",Post);
+    ADD_METHOD_TO(UserController::home,"/",Get);
+    ADD_METHOD_TO(UserController::getStudenti,"/studenti",Get);
     METHOD_LIST_END
 
         void registerUser(const drogon::HttpRequestPtr& req, std::function<void(const drogon::HttpResponsePtr &)> &&callback){
@@ -327,10 +330,41 @@ public:
         res["message"] = "studente registrato con successo";
         callback(drogon::HttpResponse::newHttpJsonResponse(res));
     }
-            };
-<<<<<<< HEAD
-=======
 
+<<<<<<< HEAD
 >>>>>>> 939420c (migliorire)
+=======
+    void home(const HttpRequestPtr &req,
+                          std::function<void (const HttpResponsePtr &)> &&callback)
+{
+    auto resp = HttpResponse::newHttpResponse();
+    resp->setBody("<h1>Benvenuto nel sistema studenti!</h1>"
+                  "<p>Usa POST /register con JSON {\"nome\":\"...\",\"cognome\":\"...\"}</p>");
+    resp->setContentTypeCode(CT_TEXT_HTML);
+    callback(resp);
+}
+
+void getStudenti(const drogon::HttpRequestPtr& req,
+                 std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+    Json::Value res;
+    Json::Value lista(Json::arrayValue);
+
+    for (nodo* t = studentService.getHead(); t != nullptr; t = t->getNext()) {
+        Json::Value stud;
+        stud["nome"] = t->getNome();
+        stud["cognome"] = t->getCognome();
+        stud["matricola"] = t->getMatricola();
+        lista.append(stud);
+    }
+
+    res["success"] = true;
+    res["studenti"] = lista;
+
+    callback(drogon::HttpResponse::newHttpJsonResponse(res));
+}
+
+            };
+
+>>>>>>> b134d3b (aggiunti al UserController la possibilità di visualizzare gli studenti aggiunti)
 
 #endif //HEADER_HPP
