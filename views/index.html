@@ -1,0 +1,44 @@
+<h2>Register</h2>
+<form id="regForm">
+  <input type="text" name="username" placeholder="Username">
+  <input type="password" name="password" placeholder="Password">
+  <button type="submit">Register</button>
+</form>
+
+<h2>Login</h2>
+<form id="loginForm">
+  <input type="text" name="username" placeholder="Username">
+  <input type="password" name="password" placeholder="Password">
+  <button type="submit">Login</button>
+</form>
+
+<script>
+async function postData(url, data) {
+  let resp = await fetch(url, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+  return resp.json();
+}
+
+document.getElementById("regForm").onsubmit = async (e) => {
+  e.preventDefault();
+  let data = {
+    username: e.target.username.value,
+    password: e.target.password.value
+  };
+  let res = await postData("/register", data);
+  alert(res.success ? "Registrazione ok!" : "Errore!");
+};
+
+document.getElementById("loginForm").onsubmit = async (e) => {
+  e.preventDefault();
+  let data = {
+    username: e.target.username.value,
+    password: e.target.password.value
+  };
+  let res = await postData("/login", data);
+  alert(res.success ? "Login riuscito!" : "Credenziali errate!");
+};
+</script>

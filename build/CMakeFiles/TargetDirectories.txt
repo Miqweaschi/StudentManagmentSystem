@@ -1,0 +1,4 @@
+/home/admin/StudentManagmentSystem/build/CMakeFiles/StudentManagmentSystem.dir
+/home/admin/StudentManagmentSystem/build/CMakeFiles/StudentWebServer.dir
+/home/admin/StudentManagmentSystem/build/CMakeFiles/edit_cache.dir
+/home/admin/StudentManagmentSystem/build/CMakeFiles/rebuild_cache.dir

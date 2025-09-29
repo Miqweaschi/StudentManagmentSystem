@@ -11,7 +11,9 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-
+#include <drogon/HttpController.h>
+#include <json/json.h>
+#include <drogon/drogon.h>
 using namespace std;
 
 //creazione classe studente
@@ -43,8 +45,7 @@ class studente {
             return ss.str();
         }
 };
-int studente::contatore = 0;  //variabile statica utilizzata per assegnare una matricola univoca ad ogni studente;
-
+  //variabile statica utilizzata per assegnare una matricola univoca ad ogni studente;
 
 
 // creazione della classe nodo, viene creata questa classe per implementare la lista a singolo puntatore successivamente, ogni nodo
@@ -66,67 +67,136 @@ public:
     string getNome() {
         return stud.getNome();
     }
+    string getCognome() {
+        return stud.getCognome();
+    }
     string getMatricola() {
         return stud.getMatricola();
     }
 };
 
-
-//creazione classe corso, questa è la nostra lista che contiene un head ed una tail
-class corso {
+class ListaStudenti {
 private:
-
-    string nomeCorso;
-    int cfu;
     nodo* head;
     nodo* tail;
 public:
-    corso() : nomeCorso(""), cfu(0), head(nullptr), tail(nullptr) {}
-    corso(string n,int c): head(nullptr), tail(nullptr) {
-        cfu = c;
-        nomeCorso = n;
+    ListaStudenti() : head(nullptr), tail(nullptr) {}
+
+    ~ListaStudenti() {
+        while (head != nullptr) {
+            nodo* tmp = head;
+            head = head->getNext();
+            delete tmp;
+        }
     }
 
-    string getNomeCorso() {
-        return nomeCorso;
-    }
+    bool inserisciStudente(studente s) {
+        // evita duplicati
+        if (getStudente(s.getNome(), s.getCognome())) return false;
 
-    nodo* getHead() {
-        return head;
-    }
-
-    void inserisciStudente(studente s) {
         nodo* newNodo = new nodo(s);
         if (head == nullptr) {
             head = tail = newNodo;
-        }
-        else {
+        } else {
             tail->setNext(newNodo);
             tail = newNodo;
         }
+        return true;
     }
+
+    bool getStudente(string nome, string cognome) {
+        for (nodo* t = head; t != nullptr; t = t->getNext()) {
+            if (t->getNome() == nome && t->getCognome() == cognome) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    nodo* getHead() { return head; }
 
     void eliminaStudente(string matricola) {
-        nodo* precedente;
-        nodo* successivo;               // metodo creato per eliminare uno studente dalla lista
-                                        // non controllo se la lista è vuota perchè già lo faccio nel metodo del corsodilaurea.
-        if(head->getMatricola() == matricola) {
-            successivo = head->getNext();       // controllo se lo studente da eliminare è in testa alla lista
-            head = successivo;
+        if (!head) return;
+        if (head->getMatricola() == matricola) {
+            nodo* tmp = head;
+            head = head->getNext();
+            if (!head) tail = nullptr;
+            delete tmp;
+            return;
         }
-        precedente = head;
-        successivo = head->getNext();
 
-        while (successivo != nullptr) {
-            if (matricola == successivo->getMatricola()) {      //se non è in testa alla lista , mi salvo il precedente del nodo da eliminare  e gli faccio puntare al nodo successivo
-                                                                // a quello da eliminare.
-                precedente->setNext(successivo->getNext());
+        nodo* prec = head;
+        nodo* succ = head->getNext();
+
+        while (succ != nullptr) {
+            if (succ->getMatricola() == matricola) {
+                prec->setNext(succ->getNext());
+                if (succ == tail) tail = prec;
+                delete succ;
                 return;
             }
-            precedente = successivo;
-            successivo = successivo->getNext();
-        };
+            prec = succ;
+            succ = succ->getNext();
+        }
     }
+};
+
+    class studentManager {
+    private:
+        ListaStudenti studenti;
+    public:
+        bool inserisciStudente(studente s) {
+            return studenti.inserisciStudente(s);
+        }
+
+        bool getStudente(string nome, string cognome) {
+            return studenti.getStudente(nome, cognome);
+        }
+
+        nodo* getHead() { return studenti.getHead(); }
+    };
+
+
+//creazione classe corso, questa è la nostra lista che contiene un head ed una tail
+
+    class corso {
+    private:
+        string nomeCorso;
+        int cfu;
+        ListaStudenti studenti;
+    public:
+        corso() : nomeCorso(""), cfu(0) {}
+        corso(string n, int c) : nomeCorso(n), cfu(c) {}
+
+        string getNomeCorso() { return nomeCorso; }
+
+        bool inserisciStudente(studente s, studentManager &manager) {
+            // controllo se è registrato nello studentManager
+            if (!manager.getStudente(s.getNome(), s.getCognome())) {
+                cout << "Studente " << s.getNome() << " " << s.getCognome()
+                     << " non registrato. Impossibile iscriverlo al corso "
+                     << nomeCorso << endl;
+                return false;
+            }
+
+            // controllo se già iscritto al corso
+            if (studenti.getStudente(s.getNome(), s.getCognome())) {
+                cout << "Studente già iscritto al corso " << nomeCorso << endl;
+                return false;
+            }
+
+            // inserimento effettivo
+            studenti.inserisciStudente(s);
+            cout << "Studente " << s.getNome() << " " << s.getCognome()
+                 << " iscritto al corso " << nomeCorso << endl;
+            return true;
+        }
+
+        void eliminaStudente(string matricola) { studenti.eliminaStudente(matricola); }
+
+        bool getStudente(string nome, string cognome) { return studenti.getStudente(nome, cognome); }
+
+        nodo* getHead() { return studenti.getHead(); }
 };
 
 
@@ -198,6 +268,31 @@ public:
     }
 };
 
+class UserController : public drogon::HttpController<UserController> {
+private:
+    static studentManager studentService;
+public:
+    METHOD_LIST_BEGIN
+    ADD_METHOD_TO(UserController::registerUser,"/register",drogon::Post);
+    METHOD_LIST_END
 
- int CorsoDiLaurea::codiceCorsoDiLaurea = 0;
+        void registerUser(const drogon::HttpRequestPtr& req, std::function<void(const drogon::HttpResponsePtr &)> &&callback){
+
+        auto json = req->getJsonObject();
+        Json::Value res;
+        if (!json || !json->isMember("nome") || !json->isMember("cognome")){
+            res["success"] = false;
+            res["error"] = "Missing fields";
+            callback(drogon::HttpResponse::newHttpJsonResponse(res));
+            return;
+        }
+        studente s((*json)["nome"].asString(), (*json)["cognome"].asString());
+        studentService.inserisciStudente(s);
+
+        res["success"] = true;
+        res["message"] = "studente registrato con successo";
+        callback(drogon::HttpResponse::newHttpJsonResponse(res));
+    }
+            };
+
 #endif //HEADER_HPP
