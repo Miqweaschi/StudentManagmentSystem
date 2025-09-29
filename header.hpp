@@ -47,7 +47,6 @@ class studente {
 };
   //variabile statica utilizzata per assegnare una matricola univoca ad ogni studente;
 
-
 // creazione della classe nodo, viene creata questa classe per implementare la lista a singolo puntatore successivamente, ogni nodo
 // contiene uno studente, un nodo punta al prossimo studente inserito.
 class nodo {
@@ -95,6 +94,9 @@ public:
         if (getStudente(s.getNome(), s.getCognome())) return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 939420c (migliorire)
         nodo* newNodo = new nodo(s);
         if (head == nullptr) {
             head = tail = newNodo;
@@ -103,20 +105,24 @@ public:
             tail = newNodo;
         }
         return true;
+<<<<<<< HEAD
 =======
     nodo* getHead() {
         return head;
+=======
+>>>>>>> 939420c (migliorire)
     }
 
     bool getStudente(string nome, string cognome) {
-        for( nodo* t = getHead(); t != nullptr; t = t->getNext()) {
-           if( t->getNome() == nome && t->getCognome() == cognome) {
-               return true;
-           }
+        for (nodo* t = head; t != nullptr; t = t->getNext()) {
+            if (t->getNome() == nome && t->getCognome() == cognome) {
+                return true;
+            }
         }
         return false;
     }
 
+<<<<<<< HEAD
     bool inserisciStudente(studente s) {
         nodo* newNodo = new nodo(s);
         if (head == nullptr) {
@@ -128,6 +134,9 @@ public:
             return true;
 >>>>>>> 48c43f1 (inserito metodo di ricerca degli studenti di un corso)
     }
+=======
+    nodo* getHead() { return head; }
+>>>>>>> 939420c (migliorire)
 
     bool getStudente(string nome, string cognome) {
         for (nodo* t = head; t != nullptr; t = t->getNext()) {
@@ -319,5 +328,9 @@ public:
         callback(drogon::HttpResponse::newHttpJsonResponse(res));
     }
             };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 939420c (migliorire)
 
 #endif //HEADER_HPP
