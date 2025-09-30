@@ -6,7 +6,7 @@
 // corsi e ogni corso può avere più studenti
 #ifndef HEADER_HPP
 #define HEADER_HPP
-
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -137,6 +137,37 @@ public:
     }
 
     nodo* getHead() { return studenti.getHead(); }
+
+    void salvaSuFile(const std::string &filePath) {
+        Json::Value root;
+        int i = 0;
+
+        for (nodo* t = studenti.getHead(); t != nullptr; t = t->getNext()) {
+            Json::Value studJson;
+            studJson["nome"] = t->getNome();
+            studJson["cognome"] = t->getCognome();
+            studJson["matricola"] = t->getMatricola();
+            root["studenti"][i++] = studJson;
+        }
+
+        std::ofstream file(filePath, std::ofstream::binary);
+        file << root;
+    }
+
+    // --- Carica studenti da file JSON ---
+    void caricaDaFile(const std::string &filePath) {
+        std::ifstream file(filePath, std::ifstream::binary);
+        if (!file.is_open()) return; // se il file non esiste, ignora
+
+        Json::Value root;
+        file >> root;
+
+        for (const auto &studJson : root["studenti"]) {
+            studente s(studJson["nome"].asString(),
+                       studJson["cognome"].asString());
+            inserisciStudente(s);
+        }
+    }
 };
 
 // classe corso
@@ -245,6 +276,11 @@ public:
         ADD_METHOD_TO(UserController::home, "/", drogon::Get);
     METHOD_LIST_END
 
+
+        static studentManager& getStudentService(){
+        return studentService;
+        }
+        
     // POST /register
     void registerUser(const drogon::HttpRequestPtr &req,
                       std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
@@ -260,6 +296,7 @@ public:
 
         studente s((*json)["nome"].asString(), (*json)["cognome"].asString());
         studentService.inserisciStudente(s);
+        studentService.salvaSuFile("../studenti.json");
 
         res["success"] = true;
         res["message"] = "Studente registrato con successo";
@@ -283,8 +320,8 @@ public:
     // GET /
     void home(const drogon::HttpRequestPtr &req,
               std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-        auto resp = drogon::HttpResponse::newFileResponse("../view/index.html"); 
-        // oppure: drogon::HttpResponse::newFileResponse("./views/index.html");
+        auto resp = drogon::HttpResponse::newFileResponse("../views/index.html"); 
+        
         callback(resp);
     }
 };

@@ -1,7 +1,8 @@
 CMakeFiles/StudentManagmentSystem.dir/globals.cpp.o: \
  /home/admin/StudentManagmentSystem/globals.cpp \
  /usr/include/stdc-predef.h /home/admin/StudentManagmentSystem/header.hpp \
- /usr/include/c++/12/iostream \
+ /usr/include/c++/12/fstream /usr/include/c++/12/istream \
+ /usr/include/c++/12/ios /usr/include/c++/12/iosfwd \
  /usr/include/x86_64-linux-gnu/c++/12/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/12/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -12,8 +13,7 @@ CMakeFiles/StudentManagmentSystem.dir/globals.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/12/bits/cpu_defines.h \
- /usr/include/c++/12/pstl/pstl_config.h /usr/include/c++/12/ostream \
- /usr/include/c++/12/ios /usr/include/c++/12/iosfwd \
+ /usr/include/c++/12/pstl/pstl_config.h \
  /usr/include/c++/12/bits/stringfwd.h \
  /usr/include/c++/12/bits/memoryfwd.h /usr/include/c++/12/bits/postypes.h \
  /usr/include/c++/12/cwchar /usr/include/wchar.h \
@@ -146,15 +146,17 @@ CMakeFiles/StudentManagmentSystem.dir/globals.cpp.o: \
  /usr/include/c++/12/bits/streambuf_iterator.h \
  /usr/include/x86_64-linux-gnu/c++/12/bits/ctype_inline.h \
  /usr/include/c++/12/bits/locale_facets.tcc \
- /usr/include/c++/12/bits/basic_ios.tcc \
- /usr/include/c++/12/bits/ostream.tcc /usr/include/c++/12/istream \
- /usr/include/c++/12/bits/istream.tcc /usr/include/c++/12/iomanip \
- /usr/include/c++/12/locale \
+ /usr/include/c++/12/bits/basic_ios.tcc /usr/include/c++/12/ostream \
+ /usr/include/c++/12/bits/ostream.tcc \
+ /usr/include/c++/12/bits/istream.tcc /usr/include/c++/12/bits/codecvt.h \
+ /usr/include/x86_64-linux-gnu/c++/12/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/12/bits/c++io.h \
+ /usr/include/c++/12/bits/fstream.tcc /usr/include/c++/12/iostream \
+ /usr/include/c++/12/iomanip /usr/include/c++/12/locale \
  /usr/include/c++/12/bits/locale_facets_nonio.h /usr/include/c++/12/ctime \
  /usr/include/x86_64-linux-gnu/c++/12/bits/time_members.h \
  /usr/include/x86_64-linux-gnu/c++/12/bits/messages_members.h \
- /usr/include/libintl.h /usr/include/c++/12/bits/codecvt.h \
- /usr/include/c++/12/bits/locale_facets_nonio.tcc \
+ /usr/include/libintl.h /usr/include/c++/12/bits/locale_facets_nonio.tcc \
  /usr/include/c++/12/bits/locale_conv.h \
  /usr/include/c++/12/bits/quoted_string.h /usr/include/c++/12/sstream \
  /usr/include/c++/12/bits/sstream.tcc \

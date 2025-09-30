@@ -1,0 +1,15 @@
+{
+	"studenti" : 
+	[
+		{
+			"cognome" : "Daniele",
+			"matricola" : "000001",
+			"nome" : "Pino"
+		},
+		{
+			"cognome" : "caserta",
+			"matricola" : "000002",
+			"nome" : "gino"
+		}
+	]
+}
