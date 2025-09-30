@@ -1,44 +1,34 @@
-<h2>Register</h2>
-<form id="regForm">
-  <input type="text" name="username" placeholder="Username">
-  <input type="password" name="password" placeholder="Password">
-  <button type="submit">Register</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestione studenti</title>
+</head>
+<body>
+  <h1>Registra studente</h1>
+  <form id="studentForm">
+    Nome: <input type="text" id="nome" name="nome" required><br>
+    Cognome: <input type="text" id="cognome" name="cognome" required><br>
+    <button type="submit">Aggiungi</button>
+  </form>
 
-<h2>Login</h2>
-<form id="loginForm">
-  <input type="text" name="username" placeholder="Username">
-  <input type="password" name="password" placeholder="Password">
-  <button type="submit">Login</button>
-</form>
+  <div id="result"></div>
 
-<script>
-async function postData(url, data) {
-  let resp = await fetch(url, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(data)
-  });
-  return resp.json();
-}
+  <script>
+    document.getElementById("studentForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value;
+      const cognome = document.getElementById("cognome").value;
 
-document.getElementById("regForm").onsubmit = async (e) => {
-  e.preventDefault();
-  let data = {
-    username: e.target.username.value,
-    password: e.target.password.value
-  };
-  let res = await postData("/register", data);
-  alert(res.success ? "Registrazione ok!" : "Errore!");
-};
-
-document.getElementById("loginForm").onsubmit = async (e) => {
-  e.preventDefault();
-  let data = {
-    username: e.target.username.value,
-    password: e.target.password.value
-  };
-  let res = await postData("/login", data);
-  alert(res.success ? "Login riuscito!" : "Credenziali errate!");
-};
-</script>
+      fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome: nome, cognome: cognome })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").innerText = data.message || data.error;
+      });
+    });
+  </script>
+</body>
+</html>
